@@ -20,7 +20,7 @@ func main() {
 
 	index := client.InitIndex(internal.MustGetEnv("ALGOLIA_INDEX_NAME"))
 
-	indexer := internal.NewFileIndexer(internal.GetEnvDefault("ALGOLIA_INDEX_FILE", "public/index.json"))
+	indexer := internal.NewFileIndexer(internal.GetEnvDefault("ALGOLIA_INDEX_FILE", "public/algolia/index.json"))
 	records, err := indexer.FetchRecords()
 	if err != nil {
 		log.Fatal(err.Error())
