@@ -26,10 +26,26 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	resSave, err := index.ReplaceAllObjects(records)
+	exists, err := index.Exists()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	// Replace all objects if the index already exists.
+	if exists {
+		res, err := index.ReplaceAllObjects(records)
+		if err != nil {
+			fmt.Println(err.Error())
+			err = nil
+		}
+		res.Wait()
+		return
+	}
+
+	res, err := index.SaveObjects(records)
 	if err != nil {
 		fmt.Println(err.Error())
 		err = nil
 	}
-	resSave.Wait()
+	res.Wait()
 }
